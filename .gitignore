@@ -1,0 +1,15 @@
+/runtime/
+/data/
+/reports/
+/backups/
+/models/
+__pycache__/
+*.py[cod]
+*.sqlite*
+*.db
+*.db-*
+*.tgz
+node_modules/
+.env
+.env.*
+*.log

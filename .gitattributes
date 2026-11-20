@@ -1,0 +1,3 @@
+# Preserve exact packaged bytes across Windows checkouts. The worker verifies
+# the upstream database module by SHA-256 before loading it.
+* -text

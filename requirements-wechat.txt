@@ -1,0 +1,4 @@
+# Versions exercised in the original Windows environment.
+cryptography==45.0.7
+zstandard==0.25.0
+tzdata==2026.2

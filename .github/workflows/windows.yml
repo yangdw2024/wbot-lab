@@ -1,0 +1,36 @@
+name: Windows synthetic checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Run synthetic regression suite
+        shell: pwsh
+        run: |
+          $env:WBOT_DATA_DIR = Join-Path $env:RUNNER_TEMP 'wbot-data'
+          $env:WBOT_TEST_ROOT = Join-Path $env:RUNNER_TEMP 'wbot-tests'
+          python -B tests.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -B -m unittest discover -s tests -p test_workflow.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tests/ui_smoke.js
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tests/cli_smoke.js
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node bin/wbot.js --help
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

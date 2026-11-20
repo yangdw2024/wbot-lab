@@ -1,0 +1,21 @@
+'use strict';
+const assert = require('assert');
+const path = require('path');
+const {spawnSync} = require('child_process');
+
+const root = path.resolve(__dirname, '..');
+const cli = path.join(root, 'bin', 'wbot.js');
+const env = {...process.env, WBOT_GROUP:'', WBOT_WECHAT_DIR:'', WBOT_AUTO_REPORTS:'', WBOT_DATA_DIR:''};
+const invoke = (...args) => spawnSync(process.execPath, [cli, ...args], {encoding:'utf8', timeout:15000, env});
+let run = invoke('--help');
+assert.strictEqual(run.status, 0);
+assert(run.stdout.includes('--data-dir'));
+run = invoke('--data-dir', 'relative-path');
+assert.notStrictEqual(run.status, 0);
+run = invoke('--data-dir', path.join(root, 'runtime', 'not-allowed'));
+assert.notStrictEqual(run.status, 0);
+run = invoke('--data-dir', path.resolve(root, '..', 'cli-test-data'), '--auto');
+assert.notStrictEqual(run.status, 0);
+run = invoke('--data-dir', path.resolve(root, '..', 'cli-test-data'), '--port', '99999');
+assert.notStrictEqual(run.status, 0);
+console.log('PASS CLI help, data-dir boundaries, auto opt-in and port validation');
