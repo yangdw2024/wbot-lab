@@ -153,6 +153,16 @@ class CoreRegressionTests(unittest.TestCase):
         self.assertIn('完整性未知',annual)
         self.assertFalse(self.db.in_transaction)
 
+    def test_report_escapes_html_from_message_text(self):
+        records=[{'time':'2026-01-01 10:00','sender':'测试者', 'group':'测试群',
+                  'content':'GPT <script>alert(1)</script> & 其他'}]
+        core.import_data(self.db,'synthetic.json',json.dumps(records,ensure_ascii=False))
+        result=report_export.export_all_reports(self.db,'测试群',Path(self.tmp.name)/'reports')
+        output=(Path(result['path'])/'04_年报'/'2026-01-01.md').read_text(encoding='utf-8')
+        self.assertNotIn('<script>',output)
+        self.assertIn('&lt;script&gt;',output)
+        self.assertIn('&amp;',output)
+
     def test_wechat_rows_use_source_identity_and_preserve_undated(self):
         base={'shard':'message_0.db','local_id':1,'sort_seq':1,'type':'文本',
               'create_time':1767225600,'sender_username':'合成用户','content':'相同文本'}

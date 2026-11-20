@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import html
 import re
 import secrets
 from datetime import datetime
@@ -14,7 +15,7 @@ ROOT = Path(__file__).resolve().parent
 
 
 def _escape(value):
-    text = str(value).replace('\r', ' ').replace('\n', ' ')
+    text = html.escape(str(value).replace('\r', ' ').replace('\n', ' '), quote=False)
     return re.sub(r'([\\`*_{}\[\]()#+.!|>\-])', r'\\\1', text)
 
 
