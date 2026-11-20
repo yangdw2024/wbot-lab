@@ -4,6 +4,8 @@ A Windows local-first prototype for analysing a WeChat group: import the locally
 
 > **Early prototype.** Reports use fixed keyword rules and counts; they are not AI-generated semantic summaries. Image, video, voice and other media contents are not analysed. A local snapshot does not prove that the group's entire history has been collected.
 
+This package includes security-relevant local database-key access and is declared as dual-use. See [DISCLOSURE](DISCLOSURE) before use; read only data you are authorised to access.
+
 ## What it does
 
 - Reads one explicitly configured group from locally stored WeChat 4.x database snapshots. The read-only adapter was exercised against one Windows WeChat 4.2.0.13 installation; compatibility with other versions is unverified.

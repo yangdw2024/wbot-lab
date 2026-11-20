@@ -1,0 +1,23 @@
+Dual-use capability disclosure
+
+This software is intended for a user to analyse a WeChat group that they are
+authorised to access on their own Windows computer. When the user explicitly
+configures a group and starts a sync (or opts in to automatic sync), the
+history reader scans a running WeChat process for database encryption keys,
+makes local snapshots and temporarily decrypts database copies. Those copies
+can contain conversations other than the selected group. Only the configured
+group is imported by the supported wrapper.
+
+The wrapper does not intentionally persist extracted keys, disables the
+upstream key-cache routines, and restricts the history worker's Python socket
+operations. Temporary plaintext lives under the selected data directory and
+may remain after forced termination or a crash. Other local processes can
+access data according to the operating system's file and process permissions.
+The local MCP interface can expose retrieved content to the client, and a
+cloud-connected client may transmit it to a remote service.
+
+The included third-party source module contains additional upstream functions
+and should not be called directly expecting the wrapper's restrictions. Do not
+use this software to access another person's device, account, keys or messages
+without their authorisation. See README.md for setup, limitations and the
+third-party license and attribution.

@@ -1,15 +1,16 @@
 {
   "name": "@yangdw2024/wbot-lab",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local Windows WeChat group analytics, calendar reports and read-only MCP tools",
   "license": "UNLICENSED",
+  "contentPolicy": {"class": "dual-use"},
   "repository": {"type": "git", "url": "https://github.com/yangdw2024/wbot-lab.git"},
   "homepage": "https://github.com/yangdw2024/wbot-lab#readme",
   "bugs": {"url": "https://github.com/yangdw2024/wbot-lab/issues"},
   "bin": {"wbot-lab": "bin/wbot.js"},
   "engines": {"node": ">=18"},
   "os": ["win32"],
-  "files": ["bin", "*.py", "*.js", "*.html", "*.css", "sample.csv", "requirements-wechat.txt", "vendor/wechat_db_source/db.py", "vendor/wechat_db_source/LICENSE", "vendor/wechat_db_source/SOURCE.md"],
+  "files": ["bin", "*.py", "*.js", "*.html", "*.css", "sample.csv", "requirements-wechat.txt", "DISCLOSURE", "vendor/wechat_db_source/db.py", "vendor/wechat_db_source/LICENSE", "vendor/wechat_db_source/SOURCE.md"],
   "keywords": ["wechat", "group", "analytics", "mcp", "local-first"],
   "publishConfig": {"access": "public"}
 }
